@@ -1,33 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+## This function create new datatype cacheMatrix 
+## new data type is contructed using matrix as arg
+## it has 4 functions setmtx , getmtx , setinv , getinv 
+## it returns list of 4 functions
 
 makeCacheMatrix <- function(x = matrix()) {
-    inv <- NULL
-    m <- x
-    setmtx <- function(x) {
-        m <<- x;
-        inv <<- NULL;
-    }
-    getmtx <- function() return(m);
-    setinv <- function(x) inv <<- x;
-    getinv <- function() return(inv);
-    return(list(setmtx = setmtx, getmtx = getmtx, setinv = setinv, getinv = getinv))
+  inv <- NULL
+  m <- x
+  setmtx <- function(x) {
+    m <<- x;
+    inv <<- NULL;
+  }
+  getmtx <- function() return(m);
+  setinv <- function(x) inv <<- x;
+  getinv <- function() return(inv);
+  return(list(setmtx = setmtx, getmtx = getmtx, setinv = setinv, getinv = getinv))
 }
 
 
-## Write a short comment describing this function
+## This function first checks if inverse of matrix is calculated
+## If yes then it returns that ans
+## Else it calculates inverse of matrix 
+## saves inverse in cacheMatrix 
+## and returns inverse
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-    inverse <- x$getinv()
-    if(!is.null(inverse)) {
-        message("using cached data")
-        return(inverse)
-    }
-    data <- mtx$getmtx()
-    invserse <- solve(data, ...)
-    mtx$setinv(inverse)
-    return(inverse)
+
+  if(!is.null(x$getinv())) {
+    message("using cached data")
+    return(x$getinv())
+  } 
+  x$setinv(solve(x$getmtx()))
+  return(x$getinv())
 }
